@@ -1,0 +1,49 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content">
+    <h1>Editar datos de proveedor</h1>
+    <form th:action="@{/proveedores/save}" th:object="${proveedor}" method="post">
+        <input type="hidden" th:field="*{id}">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" th:field="*{nombre}" id="nombre" placeholder="" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="contacto">Contacto</label>
+                    <input type="text" class="form-control" th:field="*{contacto}" id="contacto" placeholder="" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="telefono">Telefono</label>
+                    <input type="text" class="form-control" th:field="*{telefono}" id="telefono" placeholder="" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label for="correo">Correo electronico</label>
+                    <input type="text" class="form-control" th:field="*{correo}" id="correo" placeholder="" required>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <button type="submit" class="btn btn-primary">Guardar cambios</button>
+        <a th:href="@{/proveedores}">Regresar</a>
+    </form>
+</div>

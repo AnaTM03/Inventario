@@ -1,0 +1,35 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content">
+  <h1>Eliminar proveedor</h1>
+  <h3>Esta seguro que desea eliminar este proveedor?</h3>
+  <div>
+    <hr />
+    <dl class="row">
+      <dt class="col-sm-2">ID</dt>
+      <dd class="col-sm-10" th:text="${proveedor.id}"></dd>
+
+      <dt class="col-sm-2">Nombre</dt>
+      <dd class="col-sm-10" th:text="${proveedor.nombre}"></dd>
+
+      <dt class="col-sm-2">Contacto</dt>
+      <dd class="col-sm-10" th:text="${proveedor.contacto}"></dd>
+
+      <dt class="col-sm-2">Telefono</dt>
+      <dd class="col-sm-10" th:text="${proveedor.telefono}"></dd>
+
+      <dt class="col-sm-2">Correo electronico</dt>
+      <dd class="col-sm-10" th:text="${proveedor.correo}"></dd>
+    </dl>
+
+    <form th:action="@{/proveedores/delete}" method="post">
+      <input type="hidden" name="Id" th:value="${proveedor.id}">
+      <input type="submit" value="Eliminar" class="btn btn-danger">
+      <a th:href="@{/proveedores}">Regresar</a>
+    </form>
+
+  </div>
+</div>
