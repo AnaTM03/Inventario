@@ -3,6 +3,7 @@ package Sistema.Inventario.modelos;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
@@ -23,17 +24,18 @@ public class Producto {
     @NotNull(message = "El precio es requerido")
     private Double precio;
 
-    @NotBlank(message = "El Stock Actual es requerido")
+    @NotNull(message = "El stock actual es obligatorio")
     private Integer stockActual;
 
-    @NotBlank(message = "El Stock Minimo es requerido")
+    @NotNull(message = "El stock minimo es obligatorio")
     private Integer stockMinimo;
 
     @ManyToOne
     @JoinColumn(name = "categoria_id")
     private Categoria categoria;
 
-    @NotBlank(message = "Fecha")
+    @NotNull(message = "La fecha es obligatoria")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fecha;
 
     public Integer getId() {

@@ -4,7 +4,6 @@
       layout:decorate="/layouts/_mainLayout">
 
 <div layout:fragment="content">
-    <h1>Hola</h1>
 
     <!-- Mostrar mensaje de confirmacion en caso de exito -->
     <div th:if="${msg != null}">
@@ -52,10 +51,11 @@
             <td th:text="${item.precio}"></td>
             <td th:text="${item.stockActual}"></td>
             <td th:text="${item.stockMinimo}"></td>
-            <td th:text="${item.categoria_id"></td>
+            <td th:text="${item.categoria.nombre}"></td>
+            <td th:text="${item.fecha}"></td>
             <td>
                 <a th:href="@{/productos/details/{id} (id = ${item.id}) }" class="btn btn-outline-secondary">Detalles</a>
-                <a th:href="@{/productoss/edit/{id} (id = ${item.id}) }" class="btn btn-outline-info">Editar</a>
+                <a th:href="@{/productos/edit/{id}(id=${item.id})}" class="btn btn-primary">Editar</a>
                 <a th:href="@{/productos/remove/{id} (id = ${item.id}) }" class="btn btn-outline-danger">Eliminar</a>
             </td>
         </tr>

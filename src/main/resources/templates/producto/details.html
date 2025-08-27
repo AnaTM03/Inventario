@@ -1,0 +1,40 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content">
+    <h1>Detalles del producto</h1>
+    <div>
+        <hr />
+        <dl class="row">
+            <dt class="col-sm-2">ID</dt>
+            <dd class="col-sm-10" th:text="${producto.id}"></dd>
+
+            <dt class="col-sm-2">Nombre</dt>
+            <dd class="col-sm-10" th:text="${producto.nombre}"></dd>
+
+            <dt class="col-sm-2">Descripción</dt>
+            <dd class="col-sm-10" th:text="${producto.descripcion}"></dd>
+
+            <dt class="col-sm-2">Precio</dt>
+            <dd class="col-sm-10" th:text="${producto.precio}"></dd>
+
+            <dt class="col-sm-2">Stock Actual</dt>
+            <dd class="col-sm-10" th:text="${producto.stockActual}"></dd>
+
+            <dt class="col-sm-2">Stock Minimo</dt>
+            <dd class="col-sm-10" th:text="${producto.stockMinimo}"></dd>
+
+            <dt class="col-sm-2">Categoría</dt>
+            <dd class="col-sm-10" th:text="${producto.categoria.nombre}"></dd>
+
+            <dt class="col-sm-2">Fecha de registro</dt>
+            <dd class="col-sm-10" th:text="${producto.fecha}"></dd>
+
+        </dl>
+
+        <a th:href="@{/productos/edit/{id}(id=${producto.id})}" class="btn btn-outline-info">Editar</a>
+        <a th:href="@{/productos}">Regresar</a>
+    </div>
+</div>

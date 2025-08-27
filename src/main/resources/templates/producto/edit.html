@@ -1,0 +1,86 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content">
+    <h1 th:text="${producto.id != null} ? 'Editar Producto' : 'Nuevo Producto'"></h1>
+
+    <form th:action="@{/productos/save}" th:object="${producto}" method="post">
+        <!-- Si estamos editando, enviamos el ID oculto -->
+        <input type="hidden" th:if="${producto.id != null}" th:field="*{id}" />
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="nombre">Nombre</label>
+                    <input type="text" class="form-control" th:field="*{nombre}" id="nombre" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="descripcion">Descripción</label>
+                    <input type="text" class="form-control" th:field="*{descripcion}" id="descripcion" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="precio">Precio</label>
+                    <input type="number" class="form-control" th:field="*{precio}" id="precio" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="stockActual">Stock Actual</label>
+                    <input type="number" class="form-control" th:field="*{stockActual}" id="stockActual" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="stockMinimo">Stock mínimo</label>
+                    <input type="number" class="form-control" th:field="*{stockMinimo}" id="stockMinimo" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="fecha">Fecha de registro</label>
+                    <input type="date" class="form-control" th:field="*{fecha}" id="fecha" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="categoria">Categoría</label>
+                    <select class="form-control" th:field="*{categoria.id}" id="categoria" required>
+                        <option th:each="cat : ${categorias}"
+                                th:value="${cat.id}"
+                                th:text="${cat.nombre}"
+                                th:selected="${producto.categoria != null} ? ${cat.id} == ${producto.categoria.id} : false">
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a th:href="@{/productos}" class="btn btn-secondary">Regresar</a>
+    </form>
+</div>
