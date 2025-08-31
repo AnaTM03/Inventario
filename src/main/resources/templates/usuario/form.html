@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="~{layouts/_mainLayout}">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${usuario.id == null} ? 'Nuevo Usuario' : 'Editar Usuario'"></title>
+</head>
+<body>
+<div layout:fragment="content" class="container mt-4">
+    <h2 th:text="${usuario.id == null} ? 'Nuevo Usuario' : 'Editar Usuario'"></h2>
+
+    <form th:action="@{/usuarios/guardar}" th:object="${usuario}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+
+        <div class="mb-3">
+            <label for="nombre" class="form-label">Nombre:</label>
+            <input type="text" th:field="*{nombre}" class="form-control" placeholder="Ingrese nombre" required/>
+        </div>
+
+        <div class="mb-3">
+            <label for="correo" class="form-label">Correo:</label>
+            <input type="email" th:field="*{correo}" class="form-control" placeholder="Ingrese correo" required/>
+        </div>
+
+        <div class="mb-3">
+            <label for="contrasena" class="form-label">Contraseña:</label>
+            <input type="password" th:field="*{contrasena}" class="form-control" placeholder="Ingrese contraseña" required/>
+        </div>
+
+        <div class="mb-3">
+            <label for="rol" class="form-label">Rol:</label>
+            <select class="form-control" id="rol" name="rol" required>
+                <option value="" disabled selected>Seleccione un rol</option>
+                <option th:each="rol : ${roles}"
+                        th:value="${rol.id}"
+                        th:text="${rol.nombre}">
+                </option>
+            </select>
+        </div>
+
+
+        <button type="submit" class="btn btn-success">Guardar</button>
+        <a th:href="@{/usuarios}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+</body>
+</html>
