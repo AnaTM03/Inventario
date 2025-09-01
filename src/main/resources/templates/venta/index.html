@@ -1,0 +1,66 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content">
+
+    <!-- Mostrar mensaje de confirmacion en caso de exito -->
+    <div th:if="${msg != null}">
+        <script>
+            Swal.fire({
+            title: "Confirmacion",
+            text: '[[${msg}]]',
+            icon: "success"
+            });
+        </script>
+    </div>
+
+    <!-- Mostrar mensaje de error en caso de que suceda -->
+    <div th:if="${error != null}">
+        <script>
+            Swal.fire({
+            title: "Error",
+            text: '[[${error}]]',
+            icon: "error"
+            });
+        </script>
+    </div>
+
+    <h1>Ventas</h1>
+    <a th:href="@{/ventas/create}" class="btn btn-outline-primary">Nueva venta</a>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Vendedor</th>
+            <th>Cliente</th>
+            <th>Fecha de registro</th>
+            <th>Total</th>
+            <th>Acciones</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="item : ${ventas}">
+            <td th:text="${item.id}"></td>
+            <td th:text="${item.usuario.nombre}"></td>
+            <td th:text="${item.cliente.nombre}"></td>
+            <td th:text="${item.fecha}"></td>
+            <td th:text="${item.total}"></td>
+            <td>
+                <a th:href="@{/ventas/details/{id} (id = ${item.id}) }" class="btn btn-outline-secondary">Detalles</a>
+                <a th:href="@{/ventas/edit/{id}(id=${item.id})}" class="btn btn-primary">Editar</a>
+                <a th:href="@{/ventas/remove/{id} (id = ${item.id}) }" class="btn btn-outline-danger">Eliminar</a>
+            </td>
+        </tr>
+        </tbody>
+    </table>
+
+    <nav aria-label="Page navigation example">
+        <ul class="pagination">
+            <li class="page-item" th:each="pageNumber : ${pageNumbers}">
+                <a class="page-link" th:href="@{|/ventas?page=${pageNumber}|}" th:text="${pageNumber}"></a>
+            </li>
+        </ul>
+    </nav>
+</div>

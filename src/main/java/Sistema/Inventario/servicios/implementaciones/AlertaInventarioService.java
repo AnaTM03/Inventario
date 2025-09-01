@@ -3,52 +3,52 @@ package Sistema.Inventario.servicios.implementaciones;
 import Sistema.Inventario.modelos.AlertaInventario;
 import Sistema.Inventario.modelos.Producto;
 import Sistema.Inventario.repositorios.IAlertaInventarioRepository;
-import Sistema.Inventario.repositorios.IProductoRepository;
 import Sistema.Inventario.servicios.interfaces.IAlertaInventarioService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AlertaInventarioService implements IAlertaInventarioService {
 
-    private final IAlertaInventarioRepository alertaRepo;
-    private final IProductoRepository productoRepo;
+    @Autowired
+    private IAlertaInventarioRepository alertaInventarioRepository;
 
-    public AlertaInventarioService(IAlertaInventarioRepository alertaRepo, IProductoRepository productoRepo) {
-        this.alertaRepo = alertaRepo;
-        this.productoRepo = productoRepo;
+    @Override
+    public List<AlertaInventario> obtenerTodos() {
+        return alertaInventarioRepository.findAll();
     }
 
     @Override
-    public List<AlertaInventario> generarAlertasPorStock() {
-        List<Producto> productosBajos = productoRepo.findAll()
-                .stream()
-                .filter(p -> p.getStockActual() < p.getStockMinimo())
-                .toList();
-
-        return productosBajos.stream()
-                .map(prod -> {
-                    AlertaInventario alerta = new AlertaInventario();
-                    alerta.setProducto(prod);
-                    alerta.setFechaAlerta(LocalDateTime.now());
-                    alerta.setEstado("Pendiente");
-                    return alertaRepo.save(alerta);
-                }).toList();
+    public Optional<AlertaInventario> buscarPorId(Integer id) {
+        return alertaInventarioRepository.findById(id);
     }
 
     @Override
-    public List<AlertaInventario> listarAlertas() {
-        return alertaRepo.findAll();
+    public List<AlertaInventario> buscarPorProducto(Producto producto) {
+        return alertaInventarioRepository.findByProducto(producto);
     }
 
     @Override
-    public AlertaInventario resolverAlerta(Integer id) {
-        return alertaRepo.findById(id).map(alerta -> {
-            alerta.setEstado("Resuelta");
-            return alertaRepo.save(alerta);
-        }).orElse(null);
+    public List<AlertaInventario> buscarPorEstado(String estado) {
+        return alertaInventarioRepository.findByEstado(estado);
+    }
+
+    @Override
+    public List<AlertaInventario> buscarPorProductoYEstado(Producto producto, String estado) {
+        return alertaInventarioRepository.findByProductoAndEstado(producto, estado);
+    }
+
+    @Override
+    public AlertaInventario crearOEditar(AlertaInventario alerta) {
+        return alertaInventarioRepository.save(alerta);
+    }
+
+    @Override
+    public void eliminarPorId(Integer id) {
+        alertaInventarioRepository.deleteById(id);
     }
 }
 

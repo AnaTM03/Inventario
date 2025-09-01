@@ -1,0 +1,47 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content">
+    <h1>Editar Alerta de Inventario</h1>
+
+    <form th:action="@{/alertas/save}" th:object="${alerta}" method="post">
+        <input type="hidden" th:field="*{id}"/>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="producto">Producto</label>
+                    <select class="form-control" th:field="*{producto.id}" id="producto" required>
+                        <option th:each="p : ${productos}" th:value="${p.id}" th:text="${p.nombre}"
+                                th:selected="${p.id == alerta.producto.id}">
+                        </option>
+                    </select>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="fecha">Fecha</label>
+                    <input type="datetime-local" class="form-control" th:field="*{fecha}" id="fecha" required>
+                </div>
+            </div>
+        </div>
+
+        <div class="row mt-2">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="estado">Estado</label>
+                    <input type="text" class="form-control" th:field="*{estado}" id="estado" required>
+                </div>
+            </div>
+        </div>
+
+        <hr>
+        <button type="submit" class="btn btn-primary">Actualizar</button>
+        <a th:href="@{/alertas}" class="btn btn-outline-secondary">Regresar</a>
+    </form>
+</div>

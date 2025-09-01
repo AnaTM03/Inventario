@@ -1,0 +1,38 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content">
+
+    <h1>Eliminar Venta</h1>
+
+    <h3>¿Seguro que deseas eliminar esta venta?</h3>
+
+    <div>
+        <hr />
+        <dl class="row">
+            <dd class="col-sm-2">ID</dd>
+            <dt class="col-sm-10" th:text="${venta.id}"></dt>
+
+            <dd class="col-sm-2">Usuario</dd>
+            <dt class="col-sm-10" th:text="${venta.usuario.nombre}"></dt>
+
+            <dd class="col-sm-2">Cliente</dd>
+            <dt class="col-sm-10" th:text="${venta.cliente.nombre}"></dt>
+
+            <dd class="col-sm-2">Fecha</dd>
+            <dt class="col-sm-10" th:text="${#dates.format(venta.fecha, 'yyyy-MM-dd')}"></dt>
+
+            <dd class="col-sm-2">Total</dd>
+            <dt class="col-sm-10" th:text="${venta.total}"></dt>
+        </dl>
+
+        <form th:action="@{/ventas/delete}" method="post" th:object="${venta}">
+            <input type="hidden" th:field="*{id}"/>
+            <button type="submit" class="btn btn-danger">❌ Eliminar </button>
+            <a th:href="@{/ventas}">Cancelar</a>
+        </form>
+    </div>
+
+</div>
+

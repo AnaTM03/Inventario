@@ -1,0 +1,63 @@
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      layout:decorate="/layouts/_mainLayout">
+
+<div layout:fragment="content">
+  <h1>Nuevo Detalle de Venta</h1>
+
+  <form th:action="@{/detalles-venta/save}" th:object="${detalleVenta}" method="post">
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="venta">Venta</label>
+          <select class="form-control" th:field="*{venta.id}" id="venta" required>
+            <option value="">-- Selecciona una venta --</option>
+            <option th:each="v : ${ventas}"
+                    th:value="${v.id}"
+                    th:text="${'Venta #' + v.id + ' - Cliente: ' + v.cliente.nombre}">
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="producto">Producto</label>
+          <select class="form-control" th:field="*{producto.id}" id="producto" required>
+            <option value="">-- Selecciona un producto --</option>
+            <option th:each="p : ${productos}"
+                    th:value="${p.id}"
+                    th:text="${p.nombre}">
+            </option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="precioUnitario">Precio Unitario</label>
+          <input type="number" class="form-control" th:field="*{precioUnitario}" id="precioUnitario" step="0.01" required>
+        </div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="subtotal">Subtotal</label>
+          <input type="number" class="form-control" th:field="*{subtotal}" id="subtotal" step="0.01" required>
+        </div>
+      </div>
+    </div>
+
+    <hr>
+    <button type="submit" class="btn btn-primary">Guardar</button>
+    <a th:href="@{/detalles-venta}" class="btn btn-outline-secondary">Regresar</a>
+  </form>
+</div>

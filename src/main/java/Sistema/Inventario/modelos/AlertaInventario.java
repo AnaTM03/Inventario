@@ -1,9 +1,10 @@
 package Sistema.Inventario.modelos;
 
 import jakarta.persistence.*;
-import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
+@Table(name = "alertas_inventario")
 public class AlertaInventario {
 
     @Id
@@ -12,21 +13,45 @@ public class AlertaInventario {
 
     @ManyToOne
     @JoinColumn(name = "producto_id", nullable = false)
-    private Producto producto;
+    private Producto producto; // FK hacia Producto
 
-    private LocalDateTime fechaAlerta;
-    private String estado; // Pendiente / Resuelta
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date fecha;
 
-    // Getters y Setters
-    public Integer getId() { return id; }
-    public void setId(Integer id) { this.id = id; }
+    private String estado;
 
-    public Producto getProducto() { return producto; }
-    public void setProducto(Producto producto) { this.producto = producto; }
+    // ===== Getters y Setters =====
 
-    public LocalDateTime getFechaAlerta() { return fechaAlerta; }
-    public void setFechaAlerta(LocalDateTime fechaAlerta) { this.fechaAlerta = fechaAlerta; }
+    public Integer getId() {
+        return id;
+    }
 
-    public String getEstado() { return estado; }
-    public void setEstado(String estado) { this.estado = estado; }
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public Producto getProducto() {
+        return producto;
+    }
+
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
+    }
+
+    public String getEstado() {
+        return estado;
+    }
+
+    public void setEstado(String estado) {
+        this.estado = estado;
+    }
 }
+
