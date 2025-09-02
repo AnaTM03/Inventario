@@ -1,7 +1,6 @@
 package Sistema.Inventario.servicios.implementaciones;
 
 import Sistema.Inventario.modelos.Rol;
-import Sistema.Inventario.repositorios.ICategoriaRepository;
 import Sistema.Inventario.repositorios.IRolRepository;
 import Sistema.Inventario.servicios.interfaces.IRolService;
 import org.springframework.beans.factory.annotation.Autowired;

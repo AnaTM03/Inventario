@@ -1,6 +1,5 @@
 package Sistema.Inventario.controladores;
 
-import Sistema.Inventario.modelos.Cliente;
 import Sistema.Inventario.modelos.Proveedor;
 import Sistema.Inventario.servicios.interfaces.IProveedorService;
 import org.springframework.beans.factory.annotation.Autowired;

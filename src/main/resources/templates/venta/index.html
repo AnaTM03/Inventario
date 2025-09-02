@@ -35,8 +35,10 @@
             <th>ID</th>
             <th>Vendedor</th>
             <th>Cliente</th>
-            <th>Fecha de registro</th>
+            <th>Producto</th>
+            <th>Precio Unitario</th>
             <th>Total</th>
+            <th>Fecha de registro</th>
             <th>Acciones</th>
         </tr>
         </thead>
@@ -45,8 +47,11 @@
             <td th:text="${item.id}"></td>
             <td th:text="${item.usuario.nombre}"></td>
             <td th:text="${item.cliente.nombre}"></td>
-            <td th:text="${item.fecha}"></td>
+            <td th:text="${item.producto.nombre}"></td>
+            <td th:text="${item.precioUnitario}"></td>
+            <td th:text="${item.subtotal}"></td>
             <td th:text="${item.total}"></td>
+            <td th:text="${item.fecha}"></td>
             <td>
                 <a th:href="@{/ventas/details/{id} (id = ${item.id}) }" class="btn btn-outline-secondary">Detalles</a>
                 <a th:href="@{/ventas/edit/{id}(id=${item.id})}" class="btn btn-primary">Editar</a>

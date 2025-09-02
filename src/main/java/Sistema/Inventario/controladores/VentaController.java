@@ -2,10 +2,9 @@ package Sistema.Inventario.controladores;
 
 import Sistema.Inventario.modelos.*;
 import Sistema.Inventario.repositorios.IClienteRepository;
+import Sistema.Inventario.repositorios.IProductoRepository;
 import Sistema.Inventario.repositorios.IVentaRepository;
 import Sistema.Inventario.repositorios.UsuarioRepository;
-import Sistema.Inventario.servicios.implementaciones.ClienteService;
-import Sistema.Inventario.servicios.interfaces.IVentaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -33,6 +32,9 @@ public class VentaController {
 
     @Autowired
     private IClienteRepository clienteRepository;
+
+    @Autowired
+    private IProductoRepository productoRepository;
 
     @GetMapping
     public String index(Model model,
@@ -65,6 +67,7 @@ public class VentaController {
         // Enviar listas para los select del formulario
         model.addAttribute("usuarios", usuarioRepository.findAll());
         model.addAttribute("clientes", clienteRepository.findAll());
+        model.addAttribute("productos", productoRepository.findAll());
 
         return "venta/create"; // vista del formulario
     }
@@ -75,24 +78,27 @@ public class VentaController {
                        RedirectAttributes attributes) {
 
         if (venta.getUsuario() != null && venta.getUsuario().getId() != null &&
-                venta.getCliente() != null && venta.getCliente().getId() != null) {
+                venta.getCliente() != null && venta.getCliente().getId() != null
+                && venta.getProducto() != null && venta.getProducto().getId() != null) {
 
             Usuario usuario = usuarioRepository.findById(venta.getUsuario().getId()).orElse(null);
             Cliente cliente = clienteRepository.findById(venta.getCliente().getId()).orElse(null);
+            Producto producto = productoRepository.findById(venta.getProducto().getId()).orElse(null);
 
             if (usuario != null && cliente != null) {
                 venta.setUsuario(usuario);
                 venta.setCliente(cliente);
+                venta.setProducto(producto);
 
                 ventaRepository.save(venta);
 
                 attributes.addFlashAttribute("msg", "Venta registrada correctamente ✅");
             } else {
-                attributes.addFlashAttribute("error", "El usuario o cliente seleccionado no existe ⚠");
+                attributes.addFlashAttribute("error", "El usuario, cliente seleccionado o producto no existe ⚠");
             }
 
         } else {
-            attributes.addFlashAttribute("error", "Debe seleccionar un usuario y un cliente ⚠");
+            attributes.addFlashAttribute("error", "Debe seleccionar un usuario, un cliente y un producto ⚠");
         }
 
         return "redirect:/ventas";
@@ -124,6 +130,7 @@ public class VentaController {
         model.addAttribute("venta", venta);
         model.addAttribute("usuarios", usuarioRepository.findAll());  // para el select
         model.addAttribute("clientes", clienteRepository.findAll());  // para el select
+        model.addAttribute("productos", productoRepository.findAll());
         return "venta/edit"; // Vista de edición
     }
 

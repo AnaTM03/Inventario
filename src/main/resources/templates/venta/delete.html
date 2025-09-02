@@ -20,11 +20,20 @@
             <dd class="col-sm-2">Cliente</dd>
             <dt class="col-sm-10" th:text="${venta.cliente.nombre}"></dt>
 
-            <dd class="col-sm-2">Fecha</dd>
-            <dt class="col-sm-10" th:text="${#dates.format(venta.fecha, 'yyyy-MM-dd')}"></dt>
+            <dd class="col-sm-2">Producto</dd>
+            <dt class="col-sm-10" th:text="${venta.producto.nombre}"></dt>
+
+            <dd class="col-sm-2">Precio Unitario</dd>
+            <dt class="col-sm-10" th:text="${venta.precioUnitario}"></dt>
+
+            <dd class="col-sm-2">Subtotal</dd>
+            <dt class="col-sm-10" th:text="${venta.subtotal}"></dt>
 
             <dd class="col-sm-2">Total</dd>
             <dt class="col-sm-10" th:text="${venta.total}"></dt>
+
+            <dd class="col-sm-2">Fecha</dd>
+            <dt class="col-sm-10" th:text="${#dates.format(venta.fecha, 'yyyy-MM-dd')}"></dt>
         </dl>
 
         <form th:action="@{/ventas/delete}" method="post" th:object="${venta}">

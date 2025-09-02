@@ -2,7 +2,6 @@ package Sistema.Inventario.servicios.implementaciones;
 
 import Sistema.Inventario.modelos.Venta;
 import Sistema.Inventario.repositorios.IVentaRepository;
-import Sistema.Inventario.servicios.interfaces.ICategoriaService;
 import Sistema.Inventario.servicios.interfaces.IVentaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

@@ -35,11 +35,33 @@
             </div>
         </div>
 
+        <div class="col-md-4">
+            <div class="form-group">
+                <label for="producto">Producto:</label>
+                <select class="form-control" th:field="*{producto.id}" id="producto" required>
+                    <option value=" " >-- Selecciona un producto --</option>
+                    <option th:each="p : ${productos}"
+                            th:value="${p.id}"
+                            th:text="${p.nombre}"></option>
+                </select>
+            </div>
+        </div>
+
+
         <div class="row">
             <div class="col-md-4">
                 <div class="form-group">
-                    <label for="fecha">Fecha:</label>
-                    <input type="date" class="form-control" th:field="*{fecha}" id="fecha" required/>
+                    <label for="unitario">Precio Unitario:</label>
+                    <input type="number" class="form-control" step="0.01" th:field="*{precioUnitario}" id="unitario" required/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="subtotal">Subtotal:</label>
+                    <input type="number" class="form-control" step="0.01" th:field="*{subtotal}" id="subtotal" required/>
                 </div>
             </div>
         </div>
@@ -49,6 +71,15 @@
                 <div class="form-group">
                     <label for="total">Total:</label>
                     <input type="number" class="form-control" step="0.01" th:field="*{total}" id="total" required/>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-4">
+                <div class="form-group">
+                    <label for="fecha">Fecha:</label>
+                    <input type="date" class="form-control" th:field="*{fecha}" id="fecha" required/>
                 </div>
             </div>
         </div>
