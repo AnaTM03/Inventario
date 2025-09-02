@@ -4,5 +4,66 @@
       layout:decorate="/layouts/_mainLayout">
 
 <div layout:fragment="content">
-    <h1 class="text-center">Vista General</h1>
+    <h1>Dashboard</h1>
+
+    <div class="row">
+        <div class="col-md-3">
+            <div class="card text-white bg-primary mb-3">
+                <div class="card-header">Ventas Totales</div>
+                <div class="card-body">
+                    <h4 class="card-title" th:text="${totalVentas}"></h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-white bg-danger mb-3">
+                <div class="card-header">Productos con Bajo Stock</div>
+                <div class="card-body">
+                    <h4 class="card-title" th:text="${productosBajoStock}"></h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-white bg-warning mb-3">
+                <div class="card-header">Alertas Pendientes</div>
+                <div class="card-body">
+                    <h4 class="card-title" th:text="${alertasPendientes}"></h4>
+                </div>
+            </div>
+        </div>
+
+        <div class="col-md-3">
+            <div class="card text-white bg-success mb-3">
+                <div class="card-header">Clientes Registrados</div>
+                <div class="card-body">
+                    <h4 class="card-title" th:text="${totalClientes}"></h4>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h2>Últimas Alertas</h2>
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th>ID</th>
+            <th>Producto</th>
+            <th>Fecha</th>
+            <th>Estado</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="a : ${ultimasAlertas}">
+            <td th:text="${a.id}"></td>
+            <td th:text="${a.producto.nombre}"></td>
+            <td th:text="${#dates.format(a.fecha, 'yyyy-MM-dd HH:mm')}"></td>
+            <td>
+                <span th:if="${a.estado == 'PENDIENTE'}" class="badge bg-danger">Pendiente</span>
+                <span th:if="${a.estado == 'RESUELTA'}" class="badge bg-success">Resuelta</span>
+            </td>
+        </tr>
+        </tbody>
+    </table>
 </div>
