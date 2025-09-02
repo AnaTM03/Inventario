@@ -21,12 +21,24 @@ public class Venta {
     @JoinColumn(name = "cliente_id")
     private Cliente cliente;
 
+    @ManyToOne
+    @JoinColumn(name = "producto_id", nullable = false)
+    private Producto producto;
+
+    @NotNull(message = "Precio Unitario")
+    private Double precioUnitario;
+
+    @NotNull(message = "Subtotal")
+    private Double subtotal;
+
+    @NotNull(message = "Total")
+    private Double total;
+
     @NotNull(message = "La fecha es obligatoria")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     private Date fecha;
 
-    @NotNull(message = "Total")
-    private Double total;
+
 
     public Integer getId() {
         return id;
@@ -52,12 +64,28 @@ public class Venta {
         this.cliente = cliente;
     }
 
-    public Date getFecha() {
-        return fecha;
+    public Producto getProducto() {
+        return producto;
     }
 
-    public void setFecha(Date fecha) {
-        this.fecha = fecha;
+    public void setProducto(Producto producto) {
+        this.producto = producto;
+    }
+
+    public Double getPrecioUnitario() {
+        return precioUnitario;
+    }
+
+    public void setPrecioUnitario(Double precioUnitario) {
+        this.precioUnitario = precioUnitario;
+    }
+
+    public Double getSubtotal() {
+        return subtotal;
+    }
+
+    public void setSubtotal(Double subtotal) {
+        this.subtotal = subtotal;
     }
 
     public Double getTotal() {
@@ -66,5 +94,13 @@ public class Venta {
 
     public void setTotal(Double total) {
         this.total = total;
+    }
+
+    public Date getFecha() {
+        return fecha;
+    }
+
+    public void setFecha(Date fecha) {
+        this.fecha = fecha;
     }
 }
