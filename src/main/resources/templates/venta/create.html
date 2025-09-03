@@ -37,21 +37,23 @@
     <div class="col-md-4">
       <div class="form-group">
         <label for="producto">Producto:</label>
-        <select class="form-control" th:field="*{producto.id}" id="producto" required>
-          <option value="" >-- Selecciona un producto --</option>
+        <select class="form-control" th:field="*{producto.id}" id="producto" required onchange="actualizarPrecio()">
+          <option value="">-- Selecciona un producto --</option>
           <option th:each="p : ${productos}"
                   th:value="${p.id}"
-                  th:text="${p.nombre}"></option>
+                  th:text="${p.nombre}"
+                  th:data-precio="${p.precio}">
+          </option>
         </select>
       </div>
     </div>
 
-
+    <!-- Precio unitario -->
     <div class="row">
       <div class="col-md-4">
         <div class="form-group">
           <label for="unitario">Precio unitario:</label>
-          <input type="number" class="form-control" step="0.01" th:field="*{precioUnitario}" id="unitario" required/>
+          <input type="number" class="form-control" step="0.01" th:field="*{precioUnitario}" id="unitario" readonly />
         </div>
       </div>
     </div>
@@ -59,29 +61,43 @@
     <div class="row">
       <div class="col-md-4">
         <div class="form-group">
-          <label for="subtotal">subtotal:</label>
-          <input type="number" class="form-control" step="0.01" th:field="*{subtotal}" id="subtotal" required/>
+          <label for="cantidad">Cantidad:</label>
+          <input type="number" class="form-control" th:field="*{cantidad}" id="cantidad" min="1" value="1" onchange="calcularTotales()" required/>
         </div>
       </div>
     </div>
 
+
+
+    <!-- Subtotal -->
+    <div class="row">
+      <div class="col-md-4">
+        <div class="form-group">
+          <label for="subtotal">Subtotal:</label>
+          <input type="number" class="form-control" step="0.01" th:field="*{subtotal}" id="subtotal" readonly />
+        </div>
+      </div>
+    </div>
+
+    <!-- Total -->
     <div class="row">
       <div class="col-md-4">
         <div class="form-group">
           <label for="total">Total:</label>
-          <input type="number" class="form-control" step="0.01" th:field="*{total}" id="total" required/>
+          <input type="number" class="form-control" step="0.01" th:field="*{total}" id="total" readonly />
         </div>
       </div>
     </div>
-
+    
     <div class="row">
       <div class="col-md-4">
         <div class="form-group">
           <label for="fecha">Fecha:</label>
-          <input type="date" class="form-control" th:field="*{fecha}" id="fecha" required/>
+          <input type="date" class="form-control" th:field="*{fecha}" id="fecha" required />
         </div>
       </div>
     </div>
+
 
     <hr>
 
@@ -93,6 +109,34 @@
     <button type="submit" class="btn btn-primary">Guardar</button>
     <a th:href="@{/ventas}">⬅ Volver</a>
   </form>
+
+  <script>
+    function calcularTotales() {
+      const selectProducto = document.getElementById('producto');
+      const cantidadInput = document.getElementById('cantidad');
+      const unitarioInput = document.getElementById('unitario');
+      const subtotalInput = document.getElementById('subtotal');
+      const totalInput = document.getElementById('total');
+
+      const selectedOption = selectProducto.options[selectProducto.selectedIndex];
+      const precio = parseFloat(selectedOption.getAttribute('data-precio')) || 0;
+      const cantidad = parseInt(cantidadInput.value) || 0;
+
+      const subtotal = precio * cantidad;
+
+      unitarioInput.value = precio.toFixed(2);
+      subtotalInput.value = subtotal.toFixed(2);
+      totalInput.value = subtotal.toFixed(2);
+    }
+
+    // Ejecutar al cambiar producto
+    document.getElementById('producto').addEventListener('change', calcularTotales);
+    // Ejecutar al cambiar cantidad
+    document.getElementById('cantidad').addEventListener('input', calcularTotales);
+  </script>
+
+
+
 
 </div>
 

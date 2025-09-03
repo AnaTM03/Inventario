@@ -15,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -74,35 +75,48 @@ public class VentaController {
 
 
     @PostMapping("/save")
-    public String save(@ModelAttribute Venta venta,
-                       RedirectAttributes attributes) {
+    public String save(@ModelAttribute Venta venta, RedirectAttributes attributes) {
 
         if (venta.getUsuario() != null && venta.getUsuario().getId() != null &&
-                venta.getCliente() != null && venta.getCliente().getId() != null
-                && venta.getProducto() != null && venta.getProducto().getId() != null) {
+                venta.getCliente() != null && venta.getCliente().getId() != null &&
+                venta.getProducto() != null && venta.getProducto().getId() != null) {
 
             Usuario usuario = usuarioRepository.findById(venta.getUsuario().getId()).orElse(null);
             Cliente cliente = clienteRepository.findById(venta.getCliente().getId()).orElse(null);
             Producto producto = productoRepository.findById(venta.getProducto().getId()).orElse(null);
 
-            if (usuario != null && cliente != null) {
+            if (usuario != null && cliente != null && producto != null) {
                 venta.setUsuario(usuario);
                 venta.setCliente(cliente);
                 venta.setProducto(producto);
 
-                ventaRepository.save(venta);
+                // Obtener datos desde el formulario y producto
+                double precioUnitario = producto.getPrecio();
+                int cantidad = venta.getCantidad();
 
+                double subtotal = precioUnitario * cantidad;
+
+                venta.setPrecioUnitario(precioUnitario);
+                venta.setSubtotal(subtotal);
+                venta.setTotal(subtotal);
+
+                ventaRepository.save(venta);
                 attributes.addFlashAttribute("msg", "Venta registrada correctamente ✅");
+
             } else {
-                attributes.addFlashAttribute("error", "El usuario, cliente seleccionado o producto no existe ⚠");
+                attributes.addFlashAttribute("error", "El usuario, cliente o producto no existe ⚠");
             }
 
         } else {
-            attributes.addFlashAttribute("error", "Debe seleccionar un usuario, un cliente y un producto ⚠");
+            attributes.addFlashAttribute("error", "Debe seleccionar usuario, cliente y producto ⚠");
         }
 
         return "redirect:/ventas";
     }
+
+
+
+
 
     @GetMapping("/details/{id}")
     public String details(@PathVariable("id") Integer id, Model model) {
